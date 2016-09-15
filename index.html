@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Test palindrome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://unpkg.com/vue@next/dist/vue.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-sm-4">
+
+      <div id="app">
+
+        <h1>palindrome</h1>
+
+        <form class="form-inline" @submit.prevent="checkPalindrome">
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></div>
+              <input class="form-control" type="text" v-model="userText" @keyup.enter="checkPalindrome" @blur="checkPalindrome" placeholder="Write your word">
+            </div>
+          </div>
+
+          <button class="btn btn-default" @click="checkPalindrome">check</button>
+
+          <hr>
+
+          <aside v-show="showResult">
+            <!-- palindrome: {{palindrome}} -->
+            <div class="alert alert-success" v-if="palindrome">Is a palindrome</div>
+            <div class="alert alert-danger" v-else>Is not a palindrome</div>
+          </aside>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <script>
+
+    new Vue({
+      el: '#app',
+      data: {
+        userText: '',
+        palindrome: false,
+        showResult: false
+      },
+      methods: {
+        reverse: function (value) {
+          return value.split('').reverse().join('');
+        },
+        checkPalindrome: function () {
+          if(this.userText) {
+            let reverse = this.reverse(this.userText);
+            this.palindrome = reverse == this.userText;
+            this.showResult = true;
+          } else {
+            this.showResult = false;
+          }
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>
