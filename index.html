@@ -18,16 +18,16 @@
 
         <h1>palindrome</h1>
 
-        <form class="form-inline" @submit.prevent="checkPalindrome">
+        <form class="form-inline" @submit.prevent="handleResult">
 
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></div>
-              <input class="form-control" type="text" v-model="userText" @keyup.enter="checkPalindrome" @blur="checkPalindrome" placeholder="Write your word">
+              <input class="form-control" type="text" v-model="userText" @keyup.enter="handleResult" @blur="handleResult" placeholder="Write your word">
             </div>
           </div>
 
-          <button class="btn btn-default" @click="checkPalindrome">check</button>
+          <button class="btn btn-default" @click="handleResult">check</button>
 
           <hr>
 
@@ -57,13 +57,13 @@
         showResult: false
       },
       methods: {
-        reverse: function (value) {
-          return value.split('').reverse().join('');
+        isPalindrome: function(str) {
+           str = str.toLowerCase().replace(/[^a-z]+/g,"");
+           return str === str.split("").reverse().join("")
         },
-        checkPalindrome: function () {
-          if(this.userText) {
-            let reverse = this.reverse(this.userText);
-            this.palindrome = reverse == this.userText;
+        handleResult: function () {
+          if(this.userText != '') {
+            this.palindrome = this.isPalindrome(this.userText);
             this.showResult = true;
           } else {
             this.showResult = false;
